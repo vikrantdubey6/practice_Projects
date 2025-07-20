@@ -25,4 +25,3 @@ arr.forEach(function(button) {
         }
     })
 })
-
