@@ -16,8 +16,17 @@
         <div class="row">
             <input type="text" id="input-box" placeholder="Add your text ">
           
-            <button onclick= "addTask()"> Add </button>
+            <button onclick= "addTask()" id="addbtn"> Add </button>
         </div>
+
+
+        <div class="counter">
+            <p>Total Task <span id="taskCount">0</span></p>   
+            <p>Active Task <span id="active">0</span></p>
+            <p>Task Completed <span id="comTask">0</span> </p>
+        </div>
+
+
         <ul id="list-container">
             <!-- <li class="checked">Task 1</li>
             <li>Task 2</li>

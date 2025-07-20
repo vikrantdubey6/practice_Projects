@@ -15,22 +15,34 @@
 .todo-app{
     width: 100%;
     max-width: 540px;
-    background: white;
+    background: rgb(255, 255, 255);
     margin:  auto;
     padding: 40px 30px 70px;
     border-radius: 10px;
 }
 .todo-app h2{
-    color: #002765;
+    color: #2962be;
     display: flex;
     align-items: center;
     margin-bottom: 20px
+
 }
 .todo-app h2 img{
     width : 30px;
     margin-left : 10px;
 }
 
+.counter{
+    display: flex;
+     justify-content: space-around;
+}
+
+.counter p{
+    background-color: #c3c3c3;
+    border-radius: 40px;
+    padding: 15px;
+
+}
 .row{
     display: flex;
     align-items: center;
@@ -79,8 +91,8 @@ ul li::before{
     left:8px;
 }
 
-ul li .checked{
-color:#555;
+ul li.checked{
+color:#000000;
 text-decoration: line-through;
 }
 
