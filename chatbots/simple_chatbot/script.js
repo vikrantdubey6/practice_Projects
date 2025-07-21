@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
-
-    // Predefined responses
+    
+    // Predefined responses 
     const responses = {
         "hello": "Hello there! How can I help you?",
         "hi": "Hi! What can I do for you today?",
@@ -12,7 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
         "help": "I can respond to basic greetings and questions. Try saying 'hello' or 'what can you do?'",
         "what can you do": "I can answer simple questions and respond to greetings. I'm not very advanced!",
         "bye": "Goodbye! Have a great day!",
+        "who is vikrant":`Vikrant is a Developer he built me.`,
+        "who is vikrant":`Vikrant is a Developer he built me.`,
+        "who built you":`Vikrant is a Developer he built me.`,
+        "who made you":`Vikrant is a Developer he built me.`,
         "default": "I'm not sure how to respond to that. Try asking something simpler."
+
     };
 
     // Add a message to the chat
@@ -45,12 +50,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Simulate typing delay
         setTimeout(() => {
             addMessage(response, false);
-        }, 500);
+    }, 500);
     }
 
     // Event listeners
     sendButton.addEventListener('click', processInput);
-    userInput.addEventListener('keypress', function(e) {
+    userInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             processInput();
         }
