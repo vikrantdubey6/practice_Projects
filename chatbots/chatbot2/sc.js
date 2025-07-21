@@ -19,10 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     optionButtons.forEach(button => {
         button.addEventListener('click', function() {
             const buttonText = this.textContent;
-            // Add user's selection as a message
             addMessage(buttonText, true);
-            
-            // Process the button selection
             processButtonSelection(buttonText.toLowerCase());
         });
     });
@@ -31,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function processButtonSelection(selection) {
         let responseKey = selection;
         
-        // Map button text to response keys
         const buttonMap = {
             "contact us": "contact",
             "about us": "about",
@@ -45,7 +41,140 @@ document.addEventListener('DOMContentLoaded', function() {
         
         setTimeout(() => {
             addMessage(responses[responseKey] || responses.default, false);
+            // Add feedback buttons after bot response
+            addFeedbackButtons();
         }, 500);
+    }
+
+    // Function to add feedback buttons
+    function addFeedbackButtons() {
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.innerHTML = `
+            <button class="feedBtn">Problem solved</button>
+            <button class="feedBtn">Not solved</button>
+        `;
+        chatMessages.appendChild(feedbackDiv);
+        
+        // Add event listeners to new feedback buttons
+        feedbackDiv.querySelectorAll('.feedBtn').forEach(button => {
+            button.addEventListener('click', function() {
+                handleFeedback(this.textContent);
+            });
+        });
+        
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to handle feedback selection
+    function handleFeedback(feedback) {
+        if (feedback === "Problem solved") {
+            // Close the chat with a thank you message
+            addMessage("Thank you for using our chatbot! Goodbye!", false);
+            setTimeout(() => {
+                // Disable the chat interface
+                userInput.disabled = true;
+                sendButton.disabled = true;
+                // Show restart button
+                const restartDiv = document.createElement('div');
+                restartDiv.className = 'restart-container';
+                restartDiv.innerHTML = '<button id="restartBtn">Start New Chat</button>';
+                chatMessages.appendChild(restartDiv);
+                
+                document.getElementById('restartBtn').addEventListener('click', restartChat);
+            }, 500);
+        } else {
+            // Show the feedback form
+            showFeedbackForm();
+        }
+    }
+
+    // Function to show feedback form
+    function showFeedbackForm() {
+        const formDiv = document.createElement('div');
+        formDiv.className = 'feedback-form';
+        formDiv.innerHTML = `
+            <h3>We're sorry we couldn't help. Please provide your details:</h3>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="query">Your Query:</label>
+                    <textarea id="query" required></textarea>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        `;
+        chatMessages.appendChild(formDiv);
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitFeedbackForm();
+        });
+        
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to submit feedback form
+    function submitFeedbackForm() {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const query = document.getElementById('query').value;
+        
+        // Here you would typically send this data to a server
+        console.log("Feedback submitted:", { name, phone, query });
+        
+        addMessage("Thank you for your feedback. We'll contact you soon.", false);
+        name.value = ''
+        phone.value = ''
+        query.value = ''
+        setTimeout(() => {
+            // Disable the chat interface
+            userInput.disabled = true;
+            sendButton.disabled = true;
+            // Show restart button
+            const restartDiv = document.createElement('div');
+            restartDiv.className = 'restart-container';
+            restartDiv.innerHTML = '<button id="restartBtn">Start New Chat</button>';
+            chatMessages.appendChild(restartDiv);
+            
+            document.getElementById('restartBtn').addEventListener('click', restartChat);
+        }, 500);
+    }
+
+    // Function to restart the chat
+    function restartChat() {
+        // Clear all messages except the initial one
+        chatMessages.innerHTML = `
+            <div class="message bot-message">
+                Hello! I'm a simple chatbot. How can I help you today?
+            </div>
+            <div id="options" class="options"> 
+                <button id="optBtn">Contact us</button>
+                <button id="optBtn">About Us</button>
+                <button id="optBtn">Request a call</button>
+                <button id="optBtn">FAQ</button>
+            </div>
+        `;
+        
+        // Re-enable the chat interface
+        userInput.disabled = false;
+        sendButton.disabled = false;
+        
+        // Reattach event listeners
+        document.querySelectorAll('#options button').forEach(button => {
+            button.addEventListener('click', function() {
+                const buttonText = this.textContent;
+                addMessage(buttonText, true);
+                processButtonSelection(buttonText.toLowerCase());
+            });
+        });
     }
 
     // Function to add a message to the chat
@@ -76,6 +205,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setTimeout(() => {
             addMessage(response, false);
+            // Add feedback buttons after bot response
+            addFeedbackButtons();
         }, 500);
     }
 

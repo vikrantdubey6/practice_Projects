@@ -3,6 +3,7 @@ const chatMessage = document.getElementById('chat-messages')
 const userInput = document.getElementById('user-input')
 const sendBtn = document.getElementById('send-button')
 const replies = document.querySelectorAll('#options button')
+const feedback = document.querySelectorAll('#feedback button')
 
 const responses = {
     "hi":"hello, how may i help you?",
@@ -23,6 +24,20 @@ function addMessage(message, isUser) {
     chatMessage.appendChild(messageDiv);
     chatMessage.scrollTop = chatMessage.scrollHeight;
 }
+
+feedback.forEach(button =>{
+    button.addEventListener('click', function(){
+        const buttonText = this.textContent
+        addMessage(buttonText,true)
+
+        // feedbackSelection(button.textContent.toLowerCase())
+    })
+})
+
+// function feedbackSelection(feedback){
+//     let
+// }
+
 
 replies.forEach(button =>{
     button.addEventListener('click',function(){
@@ -75,7 +90,7 @@ userInput.addEventListener('keydown',function(e){
     }
 })
 })
-
+ 
 
 
 
