@@ -1,25 +1,26 @@
-const APIURL =
-    "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+const APIURL = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
-const SEARCHAPI =
-    "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
+const SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
-    const movieBox = document.querySelector("#movie-box")
-    const getMovies = async(api) => {
-        const response = await fetch(api)
-        const data = await response.json()
-        console.log(data);
-        showMovies(data.results)
-    }
+const movieBox = document.querySelector("#movie-box");
+const getMovies = async (api) => {
+  const response = await fetch(api);
+  const data = await response.json();
+  console.log(data);
+  showMovies(data.results);
+};
 const showMovies = (data) => {
-    movieBox.innerHTML=''
-// console.log(data);
-data.forEach(item => {
-    const imagePath = item.poster_path === null? 'image-missing.png': IMGPATH + item.poster_path 
-    let alt = item.title
-    alt=alt.replace(/ /g, "_")
-    const box = document.createElement('div')
-    box.classList.add("box")
+  movieBox.innerHTML = "";
+  // console.log(data);
+  data.forEach((item) => {
+    const imagePath =
+      item.poster_path === null
+        ? "image-missing.png"
+        : IMGPATH + item.poster_path;
+    let alt = item.title;
+    alt = alt.replace(/ /g, "_");
+    const box = document.createElement("div");
+    box.classList.add("box");
     box.innerHTML = `
     <img src="${imagePath}" alt="${alt}" />
                 <div class="overlay">
@@ -32,18 +33,16 @@ data.forEach(item => {
                        ${item.overview}
                     </p>
                  </div>
-                 `
-                 movieBox.appendChild(box)
+                 `;
+    movieBox.appendChild(box);
+  });
+};
+document.querySelector("#search").addEventListener("keyup", function (event) {
+  if (event.target.value != "") {
+    getMovies(SEARCHAPI + event.target.value);
+  } else {
+    getMovies(APIURL);
+  }
 });
-}
-document.querySelector("#search").addEventListener('keyup', function(event){
-    if(event.target.value != ''){
-        getMovies(SEARCHAPI + event.target.value)
-    }
-    else{
-        getMovies(APIURL)
-    }
-    
-})
 
-    getMovies(APIURL)
+getMovies(APIURL);
