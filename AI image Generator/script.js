@@ -9,8 +9,8 @@ const imageResultElement = document.getElementById('imageResult');
 function generateImage() {
 
     const promptValue = document.getElementById("prompt").value
-    const styleValue     = document.getElementById("dropdownStyles").value
-    const ratioValue = document.getElementById("dropdownRatio").value
+    const styleValue  = document.getElementById("dropdownStyles").value
+    const ratioValue  = document.getElementById("dropdownRatio").value
 
 if(!promptValue){
     alert("Please Enter a prompt")
@@ -19,7 +19,7 @@ if(!promptValue){
 setLoadingState(true);
 
 
-var myHeaders = new Headers();
+const myHeaders = new Headers();
 myHeaders.append("Authorization", "Bearer"+ API_KEY );
 
 
