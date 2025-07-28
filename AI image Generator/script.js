@@ -1,4 +1,4 @@
-const API_KEY = ''; 
+const API_KEY = 'vk-N3j2ZvFMakFLARvGHIJNfKpMNJD18K2W81xZ0X8arZDSEb'; 
 // Paste your API Key
 const API_URL = 'https://api.vyro.ai/v2/image/generations';
 
